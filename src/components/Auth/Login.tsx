@@ -1,18 +1,61 @@
+import { FormEvent, useState } from "react";
 
 const Login = () => {
+  const [formValues, setFormValues] = useState<{
+    email: string;
+    password: string;
+  }>({ email: "", password: "" });
+
+  const submitHandler = (event: FormEvent) => {
+    event.preventDefault();
+    console.log(formValues);
+    formValues.email = "";
+    formValues.password = "";
+     
+  }; 
   return (
     <>
-    <div className="w-full h-screen flex items-center justify-center">
-        <div className="border-2 border-blue-600 w-[300px] h-[400px] flex items-center justify-center">
-          <form className="flex flex-col items-center justify-center w-full gap-4 ">
-                <input type="email" placeholder="Enter Your Email" className="px-11 py-2 border-blue-600 border-2 rounded-full" />
-                <input type="password" placeholder="Enter Your Password" className="px-11 py-2 border-blue-600 border-2  rounded-full" />
-                <button>Login</button>
-          </form>
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="border-2 border-blue-600 w-[350px] h-[450px] flex items-center justify-center rounded-lg flex-col">
+          <div>
+            <h1 className="text-3xl text-center font-bold mb-9 text-white uppercase ">
+              Login
+            </h1>
+          </div>
+          <div> 
+            <form
+              onSubmit={(event) => {
+                submitHandler(event);
+              }}
+              className="flex flex-col items-center justify-start w-full gap-6 "
+            >
+              <input
+                type="email"
+                value={formValues.email}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, email: e.target.value })
+                }
+                placeholder="Enter Your Email"
+                className="pr-24 pl-3 py-2 border-blue-600  border-2 rounded-full text-white outline-blue-600 placeholder:text-white "
+              />
+              <input
+                type="password"
+                value={formValues.password}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, password: e.target.value })
+                }
+                placeholder="Enter Your Password"
+                className="pr-24 pl-3 py-2 border-blue-600 border-2  rounded-full text-white placeholder:text-white outline-blue-600"
+              />
+              <button className="px-32 py-2 bg-blue-600 text-white rounded-full text-lg font-semibold ">
+                Login
+              </button>
+            </form>
+          </div>
         </div>
-    </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
