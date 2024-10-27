@@ -1,6 +1,8 @@
-import { FormEvent, useState } from "react";
-
-const Login = () => {
+import React, { FormEvent, useState } from "react";
+interface LoginProps {
+  handleLoginFun: (email: string, password: string) => void;
+}
+const Login:React.FC<LoginProps> = ({handleLoginFun}) => {
   const [formValues, setFormValues] = useState<{
     email: string;
     password: string;
@@ -9,9 +11,9 @@ const Login = () => {
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
     console.log(formValues);
+    handleLoginFun(formValues.email, formValues.password);
     formValues.email = "";
     formValues.password = "";
-     
   }; 
   return (
     <>
@@ -36,16 +38,16 @@ const Login = () => {
                   setFormValues({ ...formValues, email: e.target.value })
                 }
                 placeholder="Enter Your Email"
-                className="pr-24 pl-3 py-2 border-blue-600  border-2 rounded-full text-white outline-blue-600 placeholder:text-white "
+                className="pr-24 pl-3 py-2 border-blue-600  border-2 rounded-full text-black outline-blue-600 placeholder:text-black "
               />
               <input
-                type="password"
+                type="text"
                 value={formValues.password}
                 onChange={(e) =>
                   setFormValues({ ...formValues, password: e.target.value })
                 }
                 placeholder="Enter Your Password"
-                className="pr-24 pl-3 py-2 border-blue-600 border-2  rounded-full text-white placeholder:text-white outline-blue-600"
+                className="pr-24 pl-3 py-2 border-blue-600 border-2  rounded-full text-black placeholder:text-black outline-blue-600"
               />
               <button className="px-32 py-2 bg-blue-600 text-white rounded-full text-lg font-semibold ">
                 Login
