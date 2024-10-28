@@ -30,6 +30,7 @@ function App() {
     authData.admin.map((items) => {
       if (email == items.email && password == items.password) {
         setUser("admin");
+        // setLoggedInUserData(items)
         toast("Login Successful");
         localStorage.setItem(
           "LoggedInUser",
@@ -39,12 +40,12 @@ function App() {
     });
     authData.employees.map((items: any) => {
       if (email == items.email && password == items.password) {
-        setUser("employee");
-        setLoggedInUserData(items);
+        setUser("employees");
+        // setLoggedInUserData(items);
         toast("Login Successful");
         localStorage.setItem(
           "LoggedInUser",
-          JSON.stringify({ role: "employee", data: items })
+          JSON.stringify({ role: "employees", data: items })
         );
       } else {
         toast("Login Failed");
@@ -56,7 +57,7 @@ function App() {
     <>
       {!user ? <Login handleLoginFun={handleLoginFun} /> : ""}
       {user == "admin" && <AdminDashboard dataAdmin={loggedInUserData} />}
-      {user == "employee" && (
+      {user == "employees" && (
         <EmployeeDashboard dataEmployee={loggedInUserData} />
       )}
     </>
