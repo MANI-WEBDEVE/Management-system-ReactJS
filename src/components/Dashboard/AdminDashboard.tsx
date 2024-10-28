@@ -3,10 +3,10 @@ import CreateTask from "../UI-Components/CreateTask";
 import Header from "../UI-Components/Header";
 
 const AdminDashboard = ({dataAdmin}: {dataAdmin: any}) => {
-  console.log({dataAdmin})
+  const {name} = dataAdmin
   return (
     <div className="h-full w-full bg-[#1C1C1C] ">
-      <Header />
+      <Header headerData={name}/>
       <CreateTask/>
       <AllTask/>
        </div>
