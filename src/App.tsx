@@ -28,18 +28,21 @@ import { useEffect } from "react";
 
 function App() {
   const [user, setUser] = useState<null | string>(null);
+  const [loggedInUserData, setLoggedInUserData] = useState()
   const authData = useContext(AuthContext);
 
 
-  useEffect(() => {
-    if (authData) {
-      const loggedInUser = JSON.parse(localStorage.getItem("LoggedInUser") as string);
-      if (loggedInUser) {
-        const role = loggedInUser.role
-        setUser(role);
-      }
-    }
-  },[authData])
+  // useEffect(() => {
+  //   if (authData) {
+  //     const loggedInUser = JSON.parse(localStorage.getItem("LoggedInUser") as string);
+  //     if (loggedInUser) {
+  //       const role = loggedInUser.role
+  //       setUser(role);
+  //     }
+  //   }
+  // },[authData])
+
+  console.log(loggedInUserData)
 
 
   const handleLoginFun = (email: string, password: string) => {
@@ -54,6 +57,7 @@ function App() {
     authData.employees.map((items:any) => {
       if (email == items.email && password == items.password) {
         setUser("employee");
+        setLoggedInUserData(items);
         toast("Login Successful");
         localStorage.setItem("LoggedInUser", JSON.stringify({role: "employee"}));
       } else{
@@ -66,7 +70,7 @@ function App() {
     <>
       {!user ? <Login handleLoginFun={handleLoginFun} /> : ""}
       {user == "admin" && <AdminDashboard />}
-      {user == "employee" && <EmployeeDashboard />}
+      {user == "employee" && <EmployeeDashboard dataEmployee={loggedInUserData}/>}
     </>
   );
 }
