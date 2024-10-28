@@ -32,17 +32,19 @@ function App() {
   const authData = useContext(AuthContext);
 
 
-  // useEffect(() => {
-  //   if (authData) {
-  //     const loggedInUser = JSON.parse(localStorage.getItem("LoggedInUser") as string);
-  //     if (loggedInUser) {
-  //       const role = loggedInUser.role
-  //       setUser(role);
-  //     }
-  //   }
-  // },[authData])
+  useEffect(() => {
+    if (authData) {
+      const loggedInUser = JSON.parse(localStorage.getItem("LoggedInUser") as string);
+      if (loggedInUser) {
+        const role = loggedInUser.role
+        
+        setUser(role);
+        setLoggedInUserData(loggedInUser.data);
+      }
+    }
+  },[authData])
 
-  console.log(loggedInUserData)
+  
 
 
   const handleLoginFun = (email: string, password: string) => {
@@ -51,7 +53,7 @@ function App() {
       if (email == items.email && password == items.password) {
         setUser("admin");
         toast("Login Successful");
-        localStorage.setItem("LoggedInUser", JSON.stringify({role: "admin"}));
+        localStorage.setItem("LoggedInUser", JSON.stringify({role: "admin", data: items}));
       } 
     })
     authData.employees.map((items:any) => {
@@ -59,7 +61,7 @@ function App() {
         setUser("employee");
         setLoggedInUserData(items);
         toast("Login Successful");
-        localStorage.setItem("LoggedInUser", JSON.stringify({role: "employee"}));
+        localStorage.setItem("LoggedInUser", JSON.stringify({role: "employee", data:items}));
       } else{
         toast("Login Failed");
       }
@@ -69,7 +71,7 @@ function App() {
   return (
     <>
       {!user ? <Login handleLoginFun={handleLoginFun} /> : ""}
-      {user == "admin" && <AdminDashboard />}
+      {user == "admin" && <AdminDashboard dataAdmin={loggedInUserData}/>}
       {user == "employee" && <EmployeeDashboard dataEmployee={loggedInUserData}/>}
     </>
   );
