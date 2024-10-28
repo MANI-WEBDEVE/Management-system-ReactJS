@@ -1,10 +1,20 @@
 const admin = [
   {
-    email: "admin@example.com",
+    id:1,
+    email: "inam@gmail.com",
+    password: "123",
+  },
+  {
+    id:2,
+    email: "inam@gmail.com",
+    password: "123",
+  },
+  {
+    id:3,
+    email: "adminInam@example.com",
     password: "adminSecurePassword",
   },
 ];
-
 const employees = [
     {
       email: "employee1@example.com",
@@ -95,9 +105,9 @@ const employees = [
       ],
     },
     {
-      email: "employee5@example.com",
-      password: "uniquepassword101",
-      tasks: [
+      email: "inam2@gmail.com",
+      password: "123",
+      tasks: [ 
         {
           title: "Optimize Performance",
           description: "Improve website loading speed and optimize images",
@@ -123,8 +133,10 @@ const employees = [
     localStorage.setItem("employees", JSON.stringify(employees))
     localStorage.setItem("admin", JSON.stringify(admin))
   }
+  setLocalStorageData()
 
   export const getLocalStorageData = () => {
     const employees = JSON.parse(localStorage.getItem("employees") || "[]")  
     const admin = JSON.parse(localStorage.getItem("admin") || "[]")
+    return {employees, admin}
   }
