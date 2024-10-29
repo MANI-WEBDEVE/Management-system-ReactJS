@@ -13,6 +13,7 @@ function App() {
   const authData = useContext(AuthContext);
 
   useEffect(() => {
+    // localStorage.clear()  
     if (authData) {
       const loggedInUser = JSON.parse(
         localStorage.getItem("LoggedInUser") as string
@@ -24,13 +25,13 @@ function App() {
         setLoggedInUserData(loggedInUser.data);
       }
     }
-  }, [authData]);
+  }, [authData, loggedInUserData, user]);
 
   const handleLoginFun = (email: string, password: string) => {
     authData.admin.map((items) => {
       if (email == items.email && password == items.password) {
         setUser("admin");
-        // setLoggedInUserData(items)
+        setLoggedInUserData(items as any)
         toast("Login Successful");
         localStorage.setItem(
           "LoggedInUser",
@@ -41,15 +42,13 @@ function App() {
     authData.employees.map((items: any) => {
       if (email == items.email && password == items.password) {
         setUser("employees");
-        // setLoggedInUserData(items);
+        setLoggedInUserData(items);
         toast("Login Successful");
         localStorage.setItem(
           "LoggedInUser",
           JSON.stringify({ role: "employees", data: items })
         );
-      } else {
-        toast("Login Failed");
-      }
+      } 
     });
   };
 
