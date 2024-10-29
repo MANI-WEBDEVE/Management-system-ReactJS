@@ -36,16 +36,16 @@ const AllTask = () => {
             <div key={idx} className="flex  justify-between w-full items-center">
               <h1 className="w-[10%] font-semibold text-xl">{name}</h1>
 
-              <div className="font-medium uppercase text-xl w-1/6 text-center m-3">
+              <div className="font-medium uppercase text-xl w-1/6 text-center m-3 text-blue-500">
                 {item.taskCount.newTask}
               </div>
-              <div className="font-medium uppercase text-xl text-center w-[%] m-3">
+              <div className="font-medium uppercase text-xl text-center w-[%] m-3 text-green-500">
                 {item.taskCount.active}
               </div>
-              <div className="font-medium uppercase text-xl w-1/6 text-end m-3">
+              <div className="font-medium uppercase text-xl w-1/6 text-end m-3 text-yellow-500">
                 {item.taskCount.completed}
               </div>
-              <div className="font-medium uppercase text-xl w-1/6 text-end m-3">
+              <div className="font-medium uppercase text-xl w-1/6 text-end m-3 text-red-500">
                 {item.taskCount.failed}
               </div>
             </div>

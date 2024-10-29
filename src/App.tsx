@@ -22,7 +22,7 @@ function App() {
         const role = loggedInUser.role;
 
         setUser(role);
-        setLoggedInUserData(loggedInUser.data);
+        setLoggedInUserData(loggedInUser. data);
       }
     }
   }, [authData]);
@@ -54,10 +54,10 @@ function App() {
 
   return (
     <>
-      {!user ? <Login handleLoginFun={handleLoginFun} /> : ""}
-      {user == "admin" && <AdminDashboard dataAdmin={loggedInUserData} />}
+      {!user ? <Login handleLoginFun={handleLoginFun}  /> : ""}
+      {user == "admin" && <AdminDashboard dataAdmin={loggedInUserData}  changeUser={setUser}/>}
       {user == "employees" && (
-        <EmployeeDashboard dataEmployee={loggedInUserData} />
+        <EmployeeDashboard dataEmployee={loggedInUserData} changeUser={setUser} />
       )}
     </>
   );

@@ -1,10 +1,10 @@
 
-const Header = ({headerData}:{headerData:string}) => {
+const Header = ({headerData, changeUser}:{headerData:string , changeUser:any}) => {
   
   // console.log(headerData)
   const handleLogOutUser = () => {
    JSON.stringify(localStorage.setItem("LoggedInUser", null as any) as any)
-    window.location.reload();
+   changeUser("")
   }
   return (
     <>
