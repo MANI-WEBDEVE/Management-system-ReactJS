@@ -25,7 +25,7 @@ function App() {
         setLoggedInUserData(loggedInUser.data);
       }
     }
-  }, [authData, loggedInUserData, user]);
+  }, [authData]);
 
   const handleLoginFun = (email: string, password: string) => {
     authData.admin.map((items) => {

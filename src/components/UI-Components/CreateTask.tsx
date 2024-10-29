@@ -1,12 +1,12 @@
 const CreateTask = () => {
   return (
     <>
-      <div className="w-full bg-[#28262654] mx-auto">
+      <div className="w-full bg-[#28262654] mx-auto ">
         <h3 className="text-4xl font-bold text-blue-500 text-center">
           Create Task
         </h3>
         <div className=" h-full flex flex-col ">
-          <form className="w-full flex justify-center items-center gap-10">
+          <form className="w-full flex justify-center items-center gap-10 max-[1200px]:flex-col">
             <div className="w-[20%] flex items-center justify-start m-3 flex-col">
               <label
                 htmlFor="title"
