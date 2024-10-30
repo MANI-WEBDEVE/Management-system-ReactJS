@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { toast } from "sonner";
 
 interface CreateTaskProps {
-  taskTitle: string;
+  title: string;
   description: string;
   Date: string;
   Assign: string;
@@ -13,7 +13,7 @@ interface CreateTaskProps {
 
 const CreateTask = () => {
   const [CreateTask, setCreateTask] = useState<CreateTaskProps>({
-    taskTitle: "",
+    title: "",
     description: "",
     Date: "",
     Assign: "",
@@ -33,9 +33,9 @@ const CreateTask = () => {
 
   const handleSubmitTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { taskTitle, description, Date, Assign, companyName } = CreateTask;
+    const { title, description, Date, Assign, companyName } = CreateTask;
     setSetTask({
-      taskTitle,
+      title,
       description,
       Date,
       Assign,
@@ -55,7 +55,12 @@ const CreateTask = () => {
   
         } else {
           const su = item.tasks.push(setTask);
-          item.taskCount.newTask = item.taskCount.newTask + 1;
+          console.log(item.tasks)
+          item.tasks.map((items:any) => (
+            items.taskCount.newTask = items.taskCount.newTask + 1
+
+            // console.log(items.taskCount.newTask )
+          ))//.newTask = item.taskCount.newTask + 1;
           setUserData((prevData: any) => ({
             ...prevData,
             employees: prevData.employees.map((user: any) =>
@@ -69,7 +74,7 @@ const CreateTask = () => {
     });
 
     setCreateTask({
-      taskTitle: "",
+      title: "",
       description: "",
       Date: "",
       Assign: "",
@@ -97,8 +102,8 @@ const CreateTask = () => {
                 <input
                   type="text"
                   placeholder="Enter Your Task Title"
-                  name="taskTitle"
-                  value={CreateTask.taskTitle}
+                  name="title"
+                  value={CreateTask.title}
                   onChange={handleSubmit}
                   className="pr-20 pl-3 py-2 rounded-lg bg-transparent border-blue-500 border-[1px]"
                 />
