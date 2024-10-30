@@ -235,7 +235,6 @@ const employees = [
     localStorage.setItem("employees", JSON.stringify(employees))
     localStorage.setItem("admin", JSON.stringify(admin))
   }
-  setLocalStorageData()
 
   export const getLocalStorageData = () => {
     const employees = JSON.parse(localStorage.getItem("employees") || "[]")  

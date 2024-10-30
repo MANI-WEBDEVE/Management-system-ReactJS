@@ -10,7 +10,7 @@ import { useEffect } from "react";
 function App() {
   const [user, setUser] = useState<null | string>(null);
   const [loggedInUserData, setLoggedInUserData] = useState();
-  const authData = useContext(AuthContext);
+  const [authData]:any = useContext(AuthContext);
 
   useEffect(() => {
     // localStorage.clear()  
@@ -28,7 +28,7 @@ function App() {
   }, [authData]);
 
   const handleLoginFun = (email: string, password: string) => {
-    authData.admin.map((items) => {
+    authData.admin.map((items:any) => {
       if (email == items.email && password == items.password) {
         setUser("admin");
         setLoggedInUserData(items as any)

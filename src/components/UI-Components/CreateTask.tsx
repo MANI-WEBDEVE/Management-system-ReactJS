@@ -1,5 +1,7 @@
-import { useState } from "react";
-
+import { AuthContext } from "@/context/AuthProvider";
+import { setLocalStorageData } from "@/utils/localStorage";
+import { useContext, useState } from "react";
+import { toast } from "sonner";
 
 interface CreateTaskProps {
   taskTitle: string;
@@ -10,32 +12,70 @@ interface CreateTaskProps {
 }
 
 const CreateTask = () => {
-
   const [CreateTask, setCreateTask] = useState<CreateTaskProps>({
-     taskTitle: "",
-     description: "",
-     Date: "",
-     Assign: "",
-     companyName: ""
+    taskTitle: "",
+    description: "",
+    Date: "",
+    Assign: "",
+    companyName: "",
   });
-  const [setTask, setSetTask] = useState<any>([]);
+  const [setTask, setSetTask] = useState<any>();
+  const [userData, setUserData]: any = useContext(AuthContext);
+  const handleSubmit = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value }: any = event.target;
+    setCreateTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
 
   const handleSubmitTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("create task complete");
-    console.log(CreateTask);
-    if(setTask.length > 0){
-      const data = setSetTask([...setTask, {...CreateTask , CreateTask}]);
-    } else {
-      const data = setSetTask([...setTask, CreateTask]);
-    }
-    console.log(setTask);
+    const { taskTitle, description, Date, Assign, companyName } = CreateTask;
+    setSetTask({
+      taskTitle,
+      description,
+      Date,
+      Assign,
+      companyName,
+      active: false,
+      falied: false,
+      newTask: true,
+      completed: false,
+      status: false,
+    });
 
+    userData.employees.forEach((item: any) => {
+      if (item.name === Assign) {
+        //  item.tasks.push(setTask)
+        if (setTask === undefined) {
+          toast("Task Not Assign", { icon: "❌" });
+  
+        } else {
+          const su = item.tasks.push(setTask);
+          item.taskCount.newTask = item.taskCount.newTask + 1;
+          setUserData((prevData: any) => ({
+            ...prevData,
+            employees: prevData.employees.map((user: any) =>
+              user.name === Assign ? item : user
+            ),
+            localStorage
+          }))
+          toast("Task Assign Successfully", { icon: "✅" });
+        }
+      }
+    });
 
-    setCreateTask({ taskTitle: "", description: "", Date: "", Assign: "", companyName: "" });
-  }
-
-
+    setCreateTask({
+      taskTitle: "",
+      description: "",
+      Date: "",
+      Assign: "",
+      companyName: "",
+    });
+  };
 
   return (
     <>
@@ -44,7 +84,10 @@ const CreateTask = () => {
           Create Task
         </h3>
         <div className=" h-full flex flex-col ">
-          <form onSubmit={handleSubmitTask} className="w-full flex justify-center items-center gap-10 max-[1200px]:flex-col">
+          <form
+            onSubmit={handleSubmitTask}
+            className="w-full flex justify-center items-center gap-10 max-[1200px]:flex-col"
+          >
             <div className="w-[20%] flex items-center justify-start m-3 flex-col">
               <label
                 htmlFor="title"
@@ -54,9 +97,9 @@ const CreateTask = () => {
                 <input
                   type="text"
                   placeholder="Enter Your Task Title"
-                  name="title"
+                  name="taskTitle"
                   value={CreateTask.taskTitle}
-                  onChange={(e) => setCreateTask({...CreateTask, taskTitle: e.target.value})}
+                  onChange={handleSubmit}
                   className="pr-20 pl-3 py-2 rounded-lg bg-transparent border-blue-500 border-[1px]"
                 />
               </label>
@@ -66,26 +109,26 @@ const CreateTask = () => {
               >
                 Description
                 <textarea
-                  name="desctiption"
+                  name="description"
                   id="desctiption"
                   placeholder="Enter Your Task Description"
                   rows={4}
                   cols={22}
                   value={CreateTask.description}
-                  onChange={(e) => setCreateTask({...CreateTask, description: e.target.value})}
+                  onChange={handleSubmit}
                   className="pr-20 pl-3 py-2 rounded-lg bg-transparent border-blue-500 border-[1px]"
                 ></textarea>
               </label>
             </div>
             <div className="w-[30%] flex items-center justify-start mt-6 flex-col">
-              
-                <input
-                  type="date"
-                  placeholder="Enter Your Task Date"
-                  value={CreateTask.Date}
-                  onChange={(e) => setCreateTask({...CreateTask, Date: e.target.value})}
-                  className="pr-20 pl-3 py-2  text-white rounded-lg bg-transparent border-blue-500 border-[1px]"
-                />
+              <input
+                type="date"
+                placeholder="Enter Your Task Date"
+                name="Date"
+                value={CreateTask.Date}
+                onChange={handleSubmit}
+                className="pr-20 pl-3 py-2  text-white rounded-lg bg-transparent border-blue-500 border-[1px]"
+              />
               <label
                 htmlFor="Asign"
                 className="text-white flex flex-col justify-center items-start gap-3 font-semibold "
@@ -94,8 +137,9 @@ const CreateTask = () => {
                 <input
                   type="text"
                   placeholder="Enter Your Task Asign"
+                  name="Assign"
                   value={CreateTask.Assign}
-                  onChange={(e) => setCreateTask({...CreateTask, Assign: e.target.value})}
+                  onChange={handleSubmit}
                   className="pr-20 pl-3 py-2 rounded-lg bg-transparent border-blue-500 border-[1px]"
                 />
               </label>
@@ -106,18 +150,22 @@ const CreateTask = () => {
                 Company
                 <input
                   type="text"
+                  name="companyName"
                   placeholder="Enter Company Name"
                   value={CreateTask.companyName}
-                  onChange={(e) => setCreateTask({...CreateTask, companyName: e.target.value})}
+                  onChange={handleSubmit}
                   className="pr-20 pl-3 py-2 rounded-lg bg-transparent border-blue-500 border-[1px]"
                 />
               </label>
             </div>
-          <div className="flex justify-center">
-            <button type="submit" className="px-10 py-2 bg-blue-600 font-semibold text-xl mb-10 mt-4 rounded-lg hover:bg-blue-900 hover:text-gray-400 translate-all duration-500">
-              Create Task
-            </button>
-          </div>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="px-10 py-2 bg-blue-600 font-semibold text-xl mb-10 mt-4 rounded-lg hover:bg-blue-900 hover:text-gray-400 translate-all duration-500"
+              >
+                Create Task
+              </button>
+            </div>
           </form>
         </div>
       </div>

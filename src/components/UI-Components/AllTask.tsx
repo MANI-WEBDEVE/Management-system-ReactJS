@@ -1,8 +1,8 @@
 import { AuthContext } from "@/context/AuthProvider";
-import { useContext } from "react";
+import { useContext} from "react";
 
 const AllTask = () => {
-  const data = useContext(AuthContext);
+  const [userData, setUserData]:any = useContext(AuthContext);
   //    console.log(data)
   const randomColor = () => {
     const firstColor = `#${Math.floor(Math.random() * 19712215).toString(16)}`;
@@ -10,6 +10,8 @@ const AllTask = () => {
 
     return { firstColor, secondColor };
   };
+
+ 
   const color = randomColor();
   return (
     <div className="p-5 bg-[#2b2a2acb] mt-4 rounded-lg w-[95%] flex flex-col gap-10 items-start mb-10 mx-auto text-white">
@@ -20,7 +22,7 @@ const AllTask = () => {
         <h1 className="font-medium text-xl">Completed</h1>
         <h1 className="font-medium text-xl">Failed</h1>
       </div>
-      {data.employees.map((item: any, idx: any) => {
+      {userData.employees.map((item: any, idx: any) => {
         const { name } = item;
 
         return (
