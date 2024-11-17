@@ -21,8 +21,8 @@ const admin = [
 const employees = [
   {
     name: "Ali Ahmed",
-    email: "ali.ahmed@example.com",
-    password: "password123",
+    email: "ali.@gmail.com",
+    password: "231",
     tasks: [
       {
         title: "Develop Homepage",
